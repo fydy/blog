@@ -1,22 +1,26 @@
+language: ruby
+rvm:
+  - 2.4.1
+  
 # 设置只监听哪个分支
 branches:
   only:
   - master
   
-# tarvis生命周期执行顺序详见官网文档
-before_install:
-- git config --global user.name "fydy"
-- git config --global user.email "edu@yuns.me"
-
+script:
+  - bundle install
+  - bundle exec jekyll build
+  
 after_success:
-- cd ./*
-- git init
-- git add --all .
-- git commit -m "Travis CI Auto Builder"
-- git checkout --orphan coding-pages
-# 这里的 REPO_TOKEN 即之前在 travis 项目的环境变量里添加的
-# Coding Pages
-- git push --force --quiet "https://deweke:${CO_TOKEN}@${CO_REF}" coding-pages:coding-pages
+  - git clone https://github.com/fydy/blog.git
+  - cd blog && rm -rf * && cp -r ../_site/* .
+  - git config user.name "fydy"
+  - git config user.email "edu@yuns.me"
+  - git checkout --orphan coding-pages
+  - git add --all .
+  - git commit -m "Travis CI Auto Builder"
+  # Coding Pages
+  - git push --force --quiet "https://deweke:${CO_TOKENT}@${CO_REF}" coding-pages:coding-pages
 
 env:
  global:
