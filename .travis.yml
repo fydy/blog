@@ -7,9 +7,6 @@ branches:
   only:
   - master
   
-script:
-  - gem install bundler jekyll
-  
 after_success:
   - git config user.name "fydy"
   - git config user.email "edu@yuns.me"
