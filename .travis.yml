@@ -13,7 +13,7 @@ script:
   
 after_success:
   - git clone https://github.com/fydy/blog.git
-  - cd blog && rm -rf * && cp -r ../_site/* .
+  - cd blog && rm -rf .git
   - git config user.name "fydy"
   - git config user.email "edu@yuns.me"
   - git checkout --orphan coding-pages
